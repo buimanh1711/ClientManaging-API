@@ -4,11 +4,10 @@ const getOne = (req, res, next) => {
   const { userId } = req
   const { _id } = req.params
 
-  AccountModel.findOne(
-    _id
-  )
+  AccountModel.findOne({ _id })
     .then(resData => {
-      if(resData) {
+      let official = null
+      if (resData) {
         if (_id === userId) {
           official = true
         }

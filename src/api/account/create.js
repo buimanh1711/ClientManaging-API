@@ -49,11 +49,12 @@ const create = (req, res, next) => {
             }
           })
         } else {
-          const newAccount = {
+          const newData = {
             ...data,
             image: null
           }
-
+          const newAccount = AccountModel(newData)
+          
           newAccount.save(err => {
             if (err === null) {
               const { _id, fullName, username, password, image } = newAccount

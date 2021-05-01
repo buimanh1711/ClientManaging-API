@@ -1,4 +1,4 @@
-const GuestModel = require('../../models/product')
+const GuestModel = require('../../models/guest')
 
 const create = (req, res, next) => {
   const data = req.body

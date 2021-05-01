@@ -1,10 +1,10 @@
-const ProductModel = require('../../models/product')
+const GuestModel = require('../../models/guest')
 
 const update = (req, res, next) => {
   const { _id } = req.params
   const data = req.body
   
-  ProductModel.updateOne({
+  GuestModel.updateOne({
     _id
   }, data)
     .then(resData => {

@@ -1,9 +1,9 @@
-const ProductModel = require('../../models/product')
+const GuestModel = require('../../models/guest')
 
 const getOne = (req, res, next) => {
     const { _id } = req.params
 
-    ProductModel.findOne({ _id })
+    GuestModel.findOne({ _id })
         .then(resData => {
             if (resData) {
                 res.json({

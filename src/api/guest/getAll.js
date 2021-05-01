@@ -1,4 +1,4 @@
-const ProductModel = require('../../models/product')
+const GuestModel = require('../../models/guest')
 
 const getAll = (req, res, next) => {
   const { address } = req.query
@@ -12,7 +12,7 @@ const getAll = (req, res, next) => {
     address
   }
 
-  ProductModel.find(query)
+  GuestModel.find(query)
     .where('totalMoney')
     .gte(parseInt(start))
     .lt(parseInt(end))
