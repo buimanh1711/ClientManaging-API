@@ -1,28 +1,46 @@
 const GuestModel = require('../../models/guest')
+const getPage = require('../../utils/getPage')
+const PAGE_SIZE = 8
 
 const getAll = (req, res, next) => {
   const { address } = req.query
+  const { page } = req.query || 1
 
-  let start = req.query.start
-  let end = req.query.end
+  const { skip, limit } = getPage(page, PAGE_SIZE)
+  const query = {}
 
-  if (start < 0) start = 0
-  if (end === 0) end = 99999999999999999999
-  const query = {
-    address
-  }
+  let start = req.query.start && parseInt(req.query.start)
+  let end = req.query.end && parseInt(req.query.end)
+
+  if (!start || start < 0) start = 0
+  if (!end || end === 0) end = 99999999999999999999
+  if (address && address !== 'null') query.address = address
+
 
   GuestModel.find(query)
     .where('totalMoney')
     .gte(parseInt(start))
     .lt(parseInt(end))
+    .skip(skip)
+    .limit(limit)
     .then(resData => {
       if (resData) {
-        res.json({
-          status: true,
-          message: 'Lấy khách hàng thành công!',
-          guests: resData
-        })
+        GuestModel.countDocuments(query)
+          .then(count => {
+            if (count) {
+              res.json({
+                status: true,
+                message: 'Lấy khách hàng thành công!',
+                guests: resData,
+                page: parseInt(page),
+                totalPage: Math.ceil(count / PAGE_SIZE),
+                totalGuests: count
+              })
+            } else {
+              req.err = 'Lỗi lấy khách hàng!'
+              next('last')
+            }
+          })
       } else {
         req.err = 'Lỗi lấy khách hàng!'
         next('last')

@@ -1,15 +1,18 @@
-const AccountModel = require('../../models/account')
+const ProductModel = require('../../models/product')
 const uploadImage = require('../../utils/uploadImage')
+const toSlug = require('../../utils/toSlug')
+
 const create = (req, res, next) => {
   const data = req.body
+
   const { image } = data
 
-  AccountModel.findOne({
-    username: data.username
+  ProductModel.findOne({
+    slug: toSlug(data.name)
   })
     .then(resData => {
       if (resData) {
-        req.err = 'Nhân viên đã tồn tại!'
+        req.err = 'Sản phẩm đã tồn tại!'
         next('last')
       } else {
         if (image && image !== 'null') {
@@ -28,20 +31,15 @@ const create = (req, res, next) => {
                 }
               }
 
-              const newAccount = new AccountModel(newData)
-
-              newAccount.save(err => {
+              const newProduct = new ProductModel(newData)
+              newProduct.save(err => {
                 if (err === null) {
-                  const { _id, fullName, username, password, image } = newAccount
                   res.json({
                     status: true,
-                    message: 'Tạo nhân viên thành công!',
-                    staff: {
-                      _id, fullName, username, password, image
-                    },
+                    message: 'Thêm sản phẩm thành công!'
                   })
                 } else {
-                  req.err = `Đăng kí thất bại! + ${err}`
+                  req.err = 'Thêm sản phẩm thất bại!'
                   next('last')
                 }
               })
@@ -52,24 +50,19 @@ const create = (req, res, next) => {
             ...data,
             image: null
           }
-          const newAccount = AccountModel(newData)
-          
-          newAccount.save(err => {
+
+          const newProduct = new ProductModel(newData)
+          newProduct.save(err => {
             if (err === null) {
-              const { _id, fullName, username, password, image } = newAccount
               res.json({
                 status: true,
-                message: 'Tạo nhân viên thành công!',
-                staff: {
-                  _id, fullName, username, password, image
-                },
+                message: 'Thêm sản phẩm thành công!'
               })
             } else {
-              req.err = `Đăng kí thất bại! + ${err}`
+              req.err = 'Thêm sản phẩm thất bại!'
               next('last')
             }
           })
-
         }
       }
     })

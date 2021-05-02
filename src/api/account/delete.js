@@ -3,15 +3,15 @@ const removeImage = require('../../utils/removeImage')
 
 const remove = (req, res, next) => {
   const { userRole } = req
-  const { staffId } = req.params
+  const { _id } = req.params
   const image = req.body
 
   if (userRole === 'admin') {
       AccountModel.deleteOne({
-          _id: staffId
+          _id: _id
       })
           .then(resData => {
-              if (resData) {
+              if (resData) {    
                   if (image.publicId) {
                     removeImage(image.publicId, {}, (err, result) => {
                         if (err) {
@@ -37,7 +37,7 @@ const remove = (req, res, next) => {
               next('last')
           })
   } else {
-      req.err = 'Lỗi xóa nhân viên!'
+      req.err = 'Bạn không có quyền!'
       next('last')
   }
 }

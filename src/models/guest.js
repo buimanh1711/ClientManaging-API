@@ -7,7 +7,8 @@ const Guest = new Schema({
   image: { type: Object, default: { url: '/images/user_default_img.png' } },
   address: { type: String, default: '' },
   phone: { type: String, default: '' },
-  totalMoney: { type: Number, default: 0 }
+  totalMoney: { type: Number, default: 0 },
+  bought: [{ product: { type: Schema.Types.ObjectId, ref: 'product' } }]
 })
 
 module.exports = mongoose.model('guest', Guest)
