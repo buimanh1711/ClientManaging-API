@@ -8,7 +8,9 @@ const Guest = new Schema({
   address: { type: String, default: '' },
   phone: { type: String, default: '' },
   totalMoney: { type: Number, default: 0 },
-  bought: [{ product: { type: Schema.Types.ObjectId, ref: 'product' } }]
+  bought: [{ product: { type: Schema.Types.ObjectId, ref: 'product' }, quantity: {type: Number, default: 1} }]
+}, {
+  timestamps: true
 })
 
 module.exports = mongoose.model('guest', Guest)

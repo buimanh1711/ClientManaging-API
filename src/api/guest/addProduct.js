@@ -3,14 +3,14 @@ const GuestModel = require('../../models/guest')
 const addProduct = (req, res, next) => {
   const { _id } = req.params
   const data = req.body
-  const { product } = data
-
+  const { productId, totalMoney, quantity } = data
+  
   GuestModel.updateOne({
     _id
   }, {
-    totalMoney: data.totalMoney,
+    totalMoney: parseInt(totalMoney),
     $push: {
-      bought: { product: {_id: product._id }}
+      bought: { product: { _id: productId }, quantity }
     }
   })
     .then(resData => {

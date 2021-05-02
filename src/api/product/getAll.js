@@ -1,4 +1,5 @@
 const ProductModel = require('../../models/product')
+const CategoryModel = require('../../models/category')
 
 const getAll = (req, res, next) => {
   const { category } = req.query
@@ -8,7 +9,7 @@ const getAll = (req, res, next) => {
   if (category) query.category = category
 
   ProductModel.find(query)
-    .populate('category')
+    .populate('category', 'title', CategoryModel)
     .then(resData => {
       if (resData) {
         res.json({
@@ -21,7 +22,10 @@ const getAll = (req, res, next) => {
         next('last')
       }
     })
-    .catch(err => next('last'))
+    .catch(err => {
+      req.err = 'Lỗi lấy sản phẩm ' + err
+      next('last')
+    })
 }
 
 module.exports = getAll

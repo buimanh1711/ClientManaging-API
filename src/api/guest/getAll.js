@@ -18,6 +18,7 @@ const getAll = (req, res, next) => {
 
 
   GuestModel.find(query)
+    .populate('bought.product')
     .where('totalMoney')
     .gte(parseInt(start))
     .lt(parseInt(end))
