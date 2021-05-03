@@ -8,7 +8,7 @@ const update = require('../api/product/update')
 const remove = require('../api/product/delete')
 
 router.delete('/:_id', auth, remove)
-router.put('/:slug', auth, update)
+router.put('/:_id', auth, update)
 router.post('/', auth, create)
 router.get('/', getAll)
 

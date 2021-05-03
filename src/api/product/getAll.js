@@ -1,15 +1,20 @@
 const ProductModel = require('../../models/product')
 const CategoryModel = require('../../models/category')
+const getPage = require('../../utils/getPage')
+const PAGE_SIZE = 8
 
 const getAll = (req, res, next) => {
-  const { category } = req.query
+  const { category, page } = req.query
 
   const query = {}
+  const { skip, limit } = getPage(page, PAGE_SIZE)
 
   if (category) query.category = category
 
   ProductModel.find(query)
     .populate('category', 'title', CategoryModel)
+    .skip(skip)
+    .limit(limit)
     .then(resData => {
       if (resData) {
         res.json({
