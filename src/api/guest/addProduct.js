@@ -4,7 +4,7 @@ const addProduct = (req, res, next) => {
   const { _id } = req.params
   const data = req.body
   const { productId, totalMoney, quantity } = data
-  
+
   GuestModel.updateOne({
     _id
   }, {
