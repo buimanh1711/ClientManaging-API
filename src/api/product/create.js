@@ -22,10 +22,12 @@ const create = (req, res, next) => {
           if (err === null) {
             res.json({
               status: true,
-              message: 'Thêm sản phẩm thành công!'
+              message: 'Thêm sản phẩm thành công!',
+              newProduct: newProduct
             })
           } else {
             req.err = 'Thêm sản phẩm thất bại!'
+            console.log(err)
             next('last')
           }
         })

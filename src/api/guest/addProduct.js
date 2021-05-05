@@ -10,7 +10,7 @@ const addProduct = (req, res, next) => {
   }, {
     totalMoney: parseInt(totalMoney),
     $push: {
-      bought: { product: { _id: productId }, quantity }
+      bought: { product: { _id: productId }, quantity, buyTime: Date.now() }
     }
   })
     .then(resData => {

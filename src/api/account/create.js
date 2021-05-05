@@ -1,7 +1,12 @@
 const AccountModel = require('../../models/account')
 const uploadImage = require('../../utils/uploadImage')
+const mongoose = require('mongoose')
+
 const create = (req, res, next) => {
+  const myId = mongoose.Types.ObjectId()
   const data = req.body
+  data._id = myId
+
   const { image } = data
 
   AccountModel.findOne({
@@ -32,13 +37,10 @@ const create = (req, res, next) => {
 
               newAccount.save(err => {
                 if (err === null) {
-                  const { _id, fullName, username, password, image } = newAccount
                   res.json({
                     status: true,
                     message: 'Tạo nhân viên thành công!',
-                    staff: {
-                      _id, fullName, username, password, image
-                    },
+                    staff: newAccount
                   })
                 } else {
                   req.err = `Đăng kí thất bại! + ${err}`
@@ -60,9 +62,7 @@ const create = (req, res, next) => {
               res.json({
                 status: true,
                 message: 'Tạo nhân viên thành công!',
-                staff: {
-                  _id, fullName, username, password, image
-                },
+                staff: newAccount
               })
             } else {
               req.err = `Đăng kí thất bại! + ${err}`
