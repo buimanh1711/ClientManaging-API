@@ -3,15 +3,16 @@ const ProductModel = require('../../models/product')
 const update = (req, res, next) => {
   const { _id } = req.params
   const data = req.body
-
-  ProductModel.updateOne({
+  console.log(data)
+  ProductModel.findOneAndUpdate({
     _id
-  }, data)
-    .then(resData => {
+  }, data, { new: true })
+    .then((resData) => {
       if (resData) {
         res.json({
           status: true,
-          message: 'Cập nhật thành công!'
+          message: 'Cập nhật thành công!',
+          newProduct: resData
         })
       } else {
         req.err = 'Lỗi cập nhật!'

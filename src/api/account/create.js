@@ -3,6 +3,13 @@ const uploadImage = require('../../utils/uploadImage')
 const mongoose = require('mongoose')
 
 const create = (req, res, next) => {
+  const { userRole } = req
+
+  if (userRole !== 'admin') {
+    req.err = 'Không có quyền!'
+    next('last')
+  }
+  
   const myId = mongoose.Types.ObjectId()
   const data = req.body
   data._id = myId

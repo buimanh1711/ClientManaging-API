@@ -1,9 +1,8 @@
 const ProductModel = require('../../models/product')
-const removeImage = require('../../utils/removeImage')
 
 const remove = (req, res, next) => {
   const { _id } = req.params
-
+  console.log('id: ', _id)
   ProductModel.deleteOne({
     _id: _id
   })

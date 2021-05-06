@@ -1,10 +1,10 @@
 const GuestModel = require('../../models/guest')
 
 const remove = (req, res, next) => {
-    const { guestId } = req.params
+    const { _id } = req.params
 
     GuestModel.deleteOne({
-        _id: guestId
+        _id
     })
         .then(resData => {
             if (resData) {
