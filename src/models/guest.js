@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const slug = require('mongoose-slug-generator')
+mongoose.plugin(slug)
 const Schema = mongoose.Schema
 
 const Guest = new Schema({
@@ -7,7 +9,9 @@ const Guest = new Schema({
   address: { type: Object, default: {} },
   phone: { type: String, default: '' },
   totalMoney: { type: Number, default: 0 },
-  bought: [{ product: { type: Schema.Types.ObjectId, ref: 'product' }, quantity: {type: Number, default: 1} }]
+  bought: [{ product: { type: Schema.Types.ObjectId, ref: 'product' }, quantity: { type: Number, default: 1 } }],
+  slug: { type: String, slug: "fullName" },
+  text: { type: String, default: ""}
 }, {
   timestamps: true
 })

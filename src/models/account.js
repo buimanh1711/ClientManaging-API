@@ -10,6 +10,7 @@ const Account = new Schema({
   image: { type: Object, default: { url: '/images/user_default_img.png' } },
   address: { type: String, default: '' },
   phone: { type: String, default: '' },
+  text: { type: String, default: "" }
 })
 
 module.exports = mongoose.model('account', Account)

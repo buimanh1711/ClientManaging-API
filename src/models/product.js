@@ -9,6 +9,7 @@ const Product = new Schema({
   category: { type: String, ref: 'category', default: null },
   sold: { type: Number, default: 0 },
   slug: { type: String, slug: "name" },
+  text: { type: String, default: "" }
 }, {
   timestamps: true
 })
