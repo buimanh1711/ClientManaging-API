@@ -1,4 +1,5 @@
 const GuestModel = require('../../models/guest')
+const ProductModel = require('../../models/product')
 
 const addProduct = (req, res, next) => {
   const { _id } = req.params
@@ -15,10 +16,16 @@ const addProduct = (req, res, next) => {
   })
     .then(resData => {
       if (resData) {
-        res.json({
-          status: true,
-          message: 'Cập nhật khách hàng thành công!'
-        })
+        ProductModel.findOneAndUpdate({
+          _id: productId
+        }, { $inc: { sold: 1 } })
+          .then((status) => {
+            console.log(status)
+            res.json({
+              status: true,
+              message: 'Cập nhật khách hàng thành công!'
+            })
+          })
       } else {
         req.err = 'Lỗi cập nhật!'
         return next('last')

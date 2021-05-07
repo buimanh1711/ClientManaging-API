@@ -22,7 +22,7 @@ const getAll = (req, res, next) => {
                 status: true,
                 message: 'Lấy nhân viên thành công!',
                 staffs: resData,
-                page: parseInt(page),
+                currentPage: parseInt(page),
                 totalPage: Math.ceil(count / PAGE_SIZE),
                 totalStaffs: count
               })

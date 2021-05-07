@@ -31,7 +31,7 @@ const getAll = (req, res, next) => {
                 status: true,
                 message: 'Lấy khách hàng thành công!',
                 guests: resData,
-                page: parseInt(page),
+                currentPage: parseInt(page),
                 totalPage: Math.ceil(count / PAGE_SIZE),
                 totalGuests: count
               })

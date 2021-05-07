@@ -16,11 +16,18 @@ const getAll = (req, res, next) => {
     .limit(limit)
     .then(resData => {
       if (resData) {
-        res.json({
-          status: true,
-          message: 'Lấy sản phẩm thành công!',
-          products: resData
-        })
+        ProductModel.countDocuments(query)
+          .then(count => {
+            if (count || count === 0) {
+              res.json({
+                status: true,
+                message: 'Lấy sản phẩm thành công!',
+                currentPage: parseInt(page),
+                totalPage: Math.ceil(count / PAGE_SIZE),
+                products: resData
+              })
+            }
+          })
       } else {
         req.err = 'Lỗi lấy sản phẩm!'
         next('last')
