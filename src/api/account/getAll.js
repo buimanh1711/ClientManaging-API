@@ -3,22 +3,21 @@ const getPage = require('../../utils/getPage')
 const PAGE_SIZE = 8
 
 const getAll = (req, res, next) => {
-  const { page } = req.query || 1
+  const { page, search } = req.query || 1
 
   const { skip, limit } = getPage(page, PAGE_SIZE)
+  const query = {}
+  query.role = 'staff'
+  if (search && search !== 'null') query.text = { $regex: search, $options: 'gi'}
 
-  AccountModel.find({
-    role: 'staff'
-  })
+  AccountModel.find(query)
     .skip(skip)
     .limit(limit)
     .then(resData => {
       if (resData) {
-        AccountModel.countDocuments({
-          role: 'staff'
-        })
+        AccountModel.countDocuments(query)
           .then(count => {
-            if (count) {
+            if (count || count === 0) {
               res.json({
                 status: true,
                 message: 'Lấy nhân viên thành công!',

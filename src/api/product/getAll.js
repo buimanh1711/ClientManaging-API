@@ -4,12 +4,11 @@ const getPage = require('../../utils/getPage')
 const PAGE_SIZE = 8
 
 const getAll = (req, res, next) => {
-  const { category, page } = req.query
+  const { search, page } = req.query
 
   const query = {}
   const { skip, limit } = getPage(page, PAGE_SIZE)
-
-  if (category) query.category = category
+  if (search) query.text = { $regex: search, $options: 'gi'}
 
   ProductModel.find(query)
     .populate('category', 'title', CategoryModel)

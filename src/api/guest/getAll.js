@@ -3,7 +3,7 @@ const getPage = require('../../utils/getPage')
 const PAGE_SIZE = 8
 
 const getAll = (req, res, next) => {
-  const { address, page, search } = req.query
+  const { cmnd, page, search } = req.query
   const { skip, limit } = getPage(page, PAGE_SIZE)
   const query = {}
 
@@ -12,9 +12,9 @@ const getAll = (req, res, next) => {
 
   if (!start || start < 0) start = 0
   if (!end || end === 0) end = 99999999999999999999
-  if (address && address !== 'null') query.address = address
+  if (cmnd && cmnd !== 'null') query.cmnd = cmnd
   if (search && search !== 'null') query.text = { $regex: search, $options: 'gi'}
-  console.log(query)
+
   GuestModel.find(query)
     .populate('bought.product')
     .where('totalMoney')
@@ -23,11 +23,10 @@ const getAll = (req, res, next) => {
     .skip(skip)
     .limit(limit)
     .then(resData => {
-      console.log(resData)
       if (resData) {
         GuestModel.countDocuments(query)
           .then(count => {
-            if (count) {
+            if (count || count === 0) {
               res.json({
                 status: true,
                 message: 'Lấy khách hàng thành công!',
