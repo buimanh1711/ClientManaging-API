@@ -20,7 +20,6 @@ const addProduct = (req, res, next) => {
           _id: productId
         }, { $inc: { sold: 1 } })
           .then((status) => {
-            console.log(status)
             res.json({
               status: true,
               message: 'Cập nhật khách hàng thành công!'

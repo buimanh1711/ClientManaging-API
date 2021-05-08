@@ -3,7 +3,7 @@ const ProductModel = require('../../models/product')
 const update = (req, res, next) => {
   const { _id } = req.params
   const data = req.body
-  console.log(data)
+  
   ProductModel.findOneAndUpdate({
     _id
   }, data, { new: true })
