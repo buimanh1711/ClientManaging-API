@@ -15,14 +15,16 @@ const update = (req, res, next) => {
   const { image, newImage } = data
 
   if (newImage) {
-    removeImage(image.publicId, {}, (error, result) => {
-      if (error) {
-        console.log('Lỗi xóa ảnh!')
-      }
-      if (result) {
-        console.log('Xóa ảnh thành công')
-      }
-    })
+    if (image && image !== 'null') {
+      removeImage(image.publicId, {}, (error, result) => {
+        if (error) {
+          console.log('Lỗi xóa ảnh!')
+        }
+        if (result) {
+          console.log('Xóa ảnh thành công')
+        }
+      })
+    }
 
     uploadImage(newImage, {}, (error, result) => {
       if (error) {

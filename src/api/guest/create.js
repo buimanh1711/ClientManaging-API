@@ -11,7 +11,7 @@ const create = (req, res, next) => {
   })
     .then(resData => {
       if (resData) {
-        req.err = 'Khách hàng đã tồn tại!'
+        req.err = 'chứng minh nhân dân đã tồn tại!'
         next('last')
       } else {
         const newGuest = new GuestModel(data)

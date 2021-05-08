@@ -1,6 +1,6 @@
 const GuestModel = require('../../models/guest')
 const getPage = require('../../utils/getPage')
-const PAGE_SIZE = 8
+const PAGE_SIZE = 10
 
 const getAll = (req, res, next) => {
   const { cmnd, page, search } = req.query
